@@ -1,0 +1,240 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnomarket</title>
+
+    <!-- ALERTAS -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- FONTS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap"
+        rel="stylesheet">
+
+    {% block css %}
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    {% endblock %}
+
+
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+
+</head>
+
+<body>
+
+
+    <header id="header">
+        <img class="menu" src="{% static 'img/menuiconwhite.png' %}" alt="menu" id="menu">
+        <div class="contenedor_logo">
+            <img class="logo" src="{% static 'img/tecnomarketpngicono.png' %} " alt="logo">
+        </div>
+
+        <div>
+
+            <nav id="nav">
+                <ul>
+                    <li>
+                        <a href="{% url 'home'%}"> Inicio </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'contacto'%} ">Contacto</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'galeria'%}">Galería</a>
+                    </li>
+
+                    {% if perms.app.view_producto %}
+                    <li>
+                        <a href="{% url 'listar_productos'%}">Lista</a>
+                    </li>
+                    {% endif %}
+
+                    {% if perms.app.add_producto %}
+                    <li>
+                        <a href="{% url 'agregar_producto'%}">Agregar</a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'logout' %}">Cerrar</a>
+                    </li>
+
+                    <li>
+                        <a href="#">@{{user.username}}</a>
+                    </li>
+
+                    {% else %}
+                    <li>
+                        <a href="{% url 'login' %}">Login</a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'registro' %}">Registro</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+    <div id="contenido">
+
+
+        {% if messages %}
+        {% for m in messages%}
+
+        <script>
+            Swal.fire({
+                'title': 'Felicitaciones',
+                'text': '{{m}}',
+                'icon': 'success',
+            })
+        </script>
+
+
+        {% endfor %}
+        {% endif %}
+
+
+        {% block content %}
+
+        {% endblock content %}
+
+        <!-- <div class="slider">
+            <div>
+                <img src="img/banner/banner1.png" alt="">
+            </div>
+            <div>
+                <img src="img/banner/banner2.png" alt="">
+            </div>
+            <div>
+                <img src="img/banner/banner3.png" alt="">
+            </div>
+        </div>
+
+        <h2>Productos</h2>
+        <div class="productos">
+
+            <div class="producto">
+
+                <div class="contenedor_producto">
+
+                    <img src="img/lenovo_tablet.jpeg" alt="imagen producto">
+                    <div class="detalle">
+                        <h5>Lenovo</h5>
+                        <h2>Tablet</h2>
+                        <h3>$120.000</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="producto">
+
+                <div class="contenedor_producto">
+
+                    <img src="img/macbook.jpeg" alt="imagen producto">
+                    <div class="detalle">
+                        <h5>apple</h5>
+                        <h2>Macbook</h2>
+                        <h3>$1.500.000</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="producto">
+
+                <div class="contenedor_producto">
+
+                    <img src="img/surface.jpeg" alt="imagen producto">
+                    <div class="detalle">
+                        <h5>microsoft</h5>
+                        <h2>Surface</h2>
+                        <h3>$2.000.000</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="producto">
+
+                <div class="contenedor_producto">
+
+                    <img src="img/s9.jpeg" alt="imagen producto">
+                    <div class="detalle">
+                        <h5>samsung</h5>
+                        <h2>Galaxy s9</h2>
+                        <h3>$400.000</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="producto">
+
+                <div class="contenedor_producto">
+
+                    <img src="img/redmi.jpeg" alt="imagen producto">
+                    <div class="detalle">
+                        <h5>Xiaomi</h5>
+                        <h2>Redmi note 8</h2>
+                        <h3>$200.000</h3>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div> -->
+
+
+    </div>
+
+
+    <footer>
+        <div class="marcas">
+            <img src="{% static 'img/footer/apple.png' %}" alt="apple">
+            <img src="{% static 'img/footer/lenovo.png' %}" alt="lenovo">
+            <img src="{% static 'img/footer/microsoft.png' %}" alt="microsoft">
+            <img src="{% static 'img/footer/samsung.png' %}" alt="samsung">
+            <img src="{% static 'img/footer/xiaomi.png' %}" alt="xiaomi">
+        </div>
+        <div class="logo_footer">
+            <img src=" {% static 'img/tecnomarketpngicono.png' %}" alt="logo">
+        </div>
+    </footer>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="js/menu.js"></script>
+
+    {% block js %}
+    {% endblock %}
+
+</body>
+
+</html>
